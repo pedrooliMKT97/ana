@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, ArrowUpRight, Shield, ChevronRight } from 'lucide-react';
+import { Menu, X, ArrowUpRight, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface FloatingHeaderProps {
   onOpenContact: () => void;
-  onOpenAdmin?: () => void;
 }
 
-export function FloatingHeader({ onOpenContact, onOpenAdmin }: FloatingHeaderProps) {
+export function FloatingHeader({ onOpenContact }: FloatingHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -197,20 +196,8 @@ export function FloatingHeader({ onOpenContact, onOpenAdmin }: FloatingHeaderPro
                 Fale comigo no WhatsApp
               </button>
 
-              <div className="flex items-center justify-between text-xs text-[#7A6B61] pt-2">
+              <div className="flex items-center justify-center text-xs text-[#7A6B61] pt-2">
                 <span>Mogi Guaçu - SP</span>
-                {onOpenAdmin && (
-                  <button
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      onOpenAdmin();
-                    }}
-                    className="flex items-center gap-1 text-[#C7A06A]/80 hover:text-[#C7A06A]"
-                  >
-                    <Shield className="w-3 h-3" />
-                    <span>Painel Admin</span>
-                  </button>
-                )}
               </div>
             </div>
           </motion.div>

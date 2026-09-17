@@ -1,19 +1,32 @@
-import heroDesktopDefault from '../assets/images/ana_hero_desktop_1789654161238.jpg';
-import heroMobileDefault from '../assets/images/ana_hero_mobile_1789654176399.jpg';
-import aboutPortraitDefault from '../assets/images/ana_about_portrait_1789654194273.jpg';
-import leadershipDefault from '../assets/images/ana_leadership_1789654211181.jpg';
-import nossoLarDefault from '../assets/images/clinica_nosso_lar_1789654224246.jpg';
 import { MediaItem, MediaKey } from '../types';
 
-export const DEFAULT_MEDIA_ITEMS: Record<MediaKey, MediaItem> = {
+/**
+ * =========================================================================
+ * FOTOGRAFIAS DO SITE ANA BERNARDI
+ * =========================================================================
+ * Para trocar as fotos do site, basta colocar suas imagens diretamente na pasta:
+ * 📁 /public/images/
+ * 
+ * Nomes padrão dos arquivos:
+ * - hero-desktop.jpg -> Foto principal em tela cheia para COMPUTADOR (Desktop)
+ * - hero-mobile.jpg  -> Foto principal vertical para CELULAR (Mobile)
+ * - about.jpg        -> Foto da seção "Sobre Ana"
+ * - leadership.jpg   -> Foto da seção "Liderança e Gestão"
+ * - nosso-lar.jpg    -> Foto da "Clínica Nosso Lar"
+ * 
+ * Se você usar outro formato (ex: .png ou .webp), basta alterar a extensão abaixo!
+ * =========================================================================
+ */
+
+export const MEDIA_ITEMS: Record<MediaKey, MediaItem> = {
   'hero.desktop': {
     id: 'hero-desktop',
     key: 'hero.desktop',
     label: 'Hero Principal (Desktop)',
     section: 'Hero',
-    description: 'Fotografia horizontal ampla com espaço negativo natural à esquerda para a tipografia.',
-    url: heroDesktopDefault,
-    defaultUrl: heroDesktopDefault,
+    description: 'Fotografia horizontal ampla para computadores (16:9). Salve em /public/images/hero-desktop.png',
+    url: '/images/hero-desktop.png',
+    defaultUrl: '/images/hero-desktop.png',
     alt: 'Ana Bernardi em seu escritório executivo com laptop e iluminação acolhedora',
     objectPositionDesktop: 'center center',
     objectPositionMobile: 'center center',
@@ -24,12 +37,12 @@ export const DEFAULT_MEDIA_ITEMS: Record<MediaKey, MediaItem> = {
     key: 'hero.mobile',
     label: 'Hero Principal (Mobile)',
     section: 'Hero',
-    description: 'Fotografia vertical com Ana Bernardi e área escura na parte inferior para título centralizado e CTA.',
-    url: heroMobileDefault,
-    defaultUrl: heroMobileDefault,
+    description: 'Fotografia vertical para celulares (9:16). Salve em /public/images/hero-mobile.png',
+    url: '/images/hero-mobile.png',
+    defaultUrl: '/images/hero-mobile.png',
     alt: 'Retrato executivo de Ana Bernardi sorrindo à mesa com laptop',
     objectPositionDesktop: 'center center',
-    objectPositionMobile: 'center 40%',
+    objectPositionMobile: 'center 35%',
     recommendedDimensions: '1080x1440 ou 1080x1920 (9:16)',
   },
   'about.ana': {
@@ -37,9 +50,9 @@ export const DEFAULT_MEDIA_ITEMS: Record<MediaKey, MediaItem> = {
     key: 'about.ana',
     label: 'Retrato Sobre Ana',
     section: 'Sobre',
-    description: 'Retrato editorial aproximado de Ana Bernardi em fundo bege acolhedor com tricot marrom.',
-    url: aboutPortraitDefault,
-    defaultUrl: aboutPortraitDefault,
+    description: 'Retrato de Ana Bernardi. Salve em /public/images/about.jpg',
+    url: '/images/about.jpg',
+    defaultUrl: '/images/about.jpg',
     alt: 'Retrato de Ana Bernardi, empresária e consultora de gestão',
     objectPositionDesktop: 'center center',
     objectPositionMobile: 'center center',
@@ -50,9 +63,9 @@ export const DEFAULT_MEDIA_ITEMS: Record<MediaKey, MediaItem> = {
     key: 'leadership.main',
     label: 'Liderança e Gestão (Negócios Humanos)',
     section: 'Liderança e Pessoas',
-    description: 'Fotografia de Ana Bernardi em conversa de consultoria e liderança em ambiente corporativo.',
-    url: leadershipDefault,
-    defaultUrl: leadershipDefault,
+    description: 'Fotografia de liderança e consultoria. Salve em /public/images/leadership.jpg',
+    url: '/images/leadership.jpg',
+    defaultUrl: '/images/leadership.jpg',
     alt: 'Ana Bernardi conversando e prestando consultoria de gestão de pessoas',
     objectPositionDesktop: 'center center',
     objectPositionMobile: 'center center',
@@ -63,9 +76,9 @@ export const DEFAULT_MEDIA_ITEMS: Record<MediaKey, MediaItem> = {
     key: 'nossoLar.main',
     label: 'Fachada Clínica Nosso Lar',
     section: 'Clínica Nosso Lar',
-    description: 'Fotografia da fachada contemporânea da Clínica Nosso Lar em Mogi Guaçu.',
-    url: nossoLarDefault,
-    defaultUrl: nossoLarDefault,
+    description: 'Fotografia da Clínica Nosso Lar. Salve em /public/images/nosso-lar.jpg',
+    url: '/images/nosso-lar.jpg',
+    defaultUrl: '/images/nosso-lar.jpg',
     alt: 'Fachada iluminada da Clínica Nosso Lar em Mogi Guaçu - SP',
     objectPositionDesktop: 'center center',
     objectPositionMobile: 'center center',
@@ -73,38 +86,6 @@ export const DEFAULT_MEDIA_ITEMS: Record<MediaKey, MediaItem> = {
   },
 };
 
-const STORAGE_KEY = 'ana_bernardi_cms_media_v1';
-
 export function getStoredMedia(): Record<MediaKey, MediaItem> {
-  try {
-    const data = localStorage.getItem(STORAGE_KEY);
-    if (!data) return DEFAULT_MEDIA_ITEMS;
-    const parsed = JSON.parse(data);
-    return {
-      ...DEFAULT_MEDIA_ITEMS,
-      ...parsed,
-    };
-  } catch (err) {
-    console.warn('Erro ao carregar mídia do CMS, usando padrão:', err);
-    return DEFAULT_MEDIA_ITEMS;
-  }
-}
-
-export function saveStoredMedia(items: Record<MediaKey, MediaItem>): void {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-    window.dispatchEvent(new Event('ana_media_updated'));
-  } catch (err) {
-    console.error('Erro ao salvar mídia no CMS:', err);
-  }
-}
-
-export function resetMediaToDefault(): Record<MediaKey, MediaItem> {
-  try {
-    localStorage.removeItem(STORAGE_KEY);
-    window.dispatchEvent(new Event('ana_media_updated'));
-  } catch (err) {
-    console.error('Erro ao resetar mídia:', err);
-  }
-  return DEFAULT_MEDIA_ITEMS;
+  return MEDIA_ITEMS;
 }

@@ -1,11 +1,7 @@
-import { Instagram, Linkedin, Shield } from 'lucide-react';
+import { Instagram, Linkedin } from 'lucide-react';
 import { PROFILE_DATA } from '../data/profile';
 
-interface FooterProps {
-  onOpenAdmin: () => void;
-}
-
-export function Footer({ onOpenAdmin }: FooterProps) {
+export function Footer() {
   const scrollTo = (id: string) => {
     const el = document.querySelector(id);
     if (el) {
@@ -66,14 +62,6 @@ export function Footer({ onOpenAdmin }: FooterProps) {
             >
               <Linkedin className="w-4 h-4" />
             </a>
-            <button
-              onClick={onOpenAdmin}
-              aria-label="Acessar Painel de Gestão de Imagens (CMS)"
-              title="Gerenciador de Mídia e Imagens"
-              className="w-9 h-9 rounded-full bg-[#2B1A14] border border-[#C7A06A]/20 flex items-center justify-center text-[#C7A06A]/60 hover:text-[#C7A06A] hover:border-[#C7A06A]/50 transition-all"
-            >
-              <Shield className="w-4 h-4" />
-            </button>
           </div>
         </div>
 
